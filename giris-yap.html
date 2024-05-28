@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Görevhane Giriş Yap</title>
+    <link rel="stylesheet" href="css/util.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <header id="home" class="kayit-header">
+      <div class="navbar">
+        <h1 class="brand">
+          <i class="fa-regular fa-calendar"></i>
+          <span>Görevhane</span>
+        </h1>
+        <nav>
+          <ul>
+            <li><a href="index.html">Anasayfa</a></li>
+            <li><a href="index.html#hakkımızda">Hakkımızda</a></li>
+            <li><a href="index.html#iletisim">İletişim</a></li>
+            <li><a target="_blank" href="kayıt-ol.html">Kayıt Ol</a></li>
+            <li><a href="giris-yap.html">Giriş Yap</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main class="kayit row bg-dark">
+      <h1 class="kayit-basligi">Hoşgeldiniz</h1>
+      <form id="girisForm" class="kayit-form">
+        <div class="bolum">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="E-Mailinizi Giriniz" />
+        </div>
+        <div class="bolum">
+          <label for="sifre">Şifreniz</label>
+          <input type="password" id="sifre" placeholder="Sifrenizi Giriniz" />
+        </div>
+        <button type="submit" id="giris-btn" class="btn btn-primary">
+          Giriş Yap
+        </button>
+      </form>
+    </main>
+    <footer class="giris-footer footer bg-light">
+      <div class="social">
+        <a href="https://www.facebook.com/profile.php?id=100008740694804"
+          ><i class="fab fa-facebook fa-4x"></i
+        ></a>
+        <a href="https://twitter.com/bilin_meyen422"
+          ><i class="fab fa-twitter fa-4x"></i
+        ></a>
+        <a href="https://www.youtube.com/feed/you"
+          ><i class="fab fa-youtube fa-4x"></i
+        ></a>
+        <a
+          href="https://www.linkedin.com/in/mustafa-talha-do%C4%9Fan-91ab9523a/"
+          ><i class="fab fa-linkedin fa-4x"></i
+        ></a>
+      </div>
+      <p>Copyright &copy 2025 - Görevhane</p>
+    </footer>
+    <script src="giris.js"></script>
+  </body>
+</html>

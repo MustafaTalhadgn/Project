@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Görevhane</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/util.css" />
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css" />
+</head>
+  </head>
+  <body>
+    <header id="home" class="kayit-header">
+      <div class="navbar">
+        <h1 class="brand">
+          <i class="fa-regular fa-calendar"></i>
+          <span>Görevhane</span>
+        </h1>
+        <nav>
+          <ul>
+            <li><a href="index.html">Anasayfa</a></li>
+            <li><a href="index.html#hakkımızda">Hakkımızda</a></li>
+            <li><a href="index.html#iletisim">İletişim</a></li>
+            <li><a target="_blank" href="kayıt-ol.html">Kayıt Ol</a></li>
+            <li><a href="giris-yap.html">Giriş Yap</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main class="main">
+      <section class="görev">
+        <div class="main-gorev">
+        <div class="colon1">
+          <div class="kullanici-girisi">
+            <div class="kullanici">
+              <i class="fa-solid fa-user"></i>
+              <span class="kullanici-Ad"> </span>
+            </div>
+            <div class="kullanici-cikis">
+              <button class="cikis">çıkış yap</button>
+            </div>
+          </div>
+          
+          <div class="list">
+            <div class="item gorevitem1 bg-dark">
+              Görevlerim
+            </div>
+            <div class="item gorevitem2 bg-dark">
+              Görev Ekle
+            </div>
+            <div class="item gorevitem3 bg-dark">
+              Görev Düzenle
+            </div>
+            <div class="item gorevitem4 bg-dark">
+              Tamamlanan Görevler
+            </div>
+            <div class="item gorevitem5 bg-dark">
+              Takvim
+            </div>
+            
+          </div>
+        </div>
+        <div class="colon2">
+          <div class="satir">
+            <div class="gorevlerim">
+              <div gorevlerim-title>
+                <h2>Görevlerim</h2>
+              </div>
+             <ul class="gorevlerim-item">
+              
+             </ul>
+            </div>
+            <div class="gorev-ekle">
+              <div class="kutu kutu1 ">
+                <div class="ornek-gorevler ornek1">
+                <ul>
+                  <li >Yapılabilecekler listesi</li>
+                  <li class="ornek">Kahvaltı</li>
+                  <li class="ornek">Kitap Okumak</li>
+                  <li class="ornek">Spor Yapma</li>
+                  <li class="ornek">Yemek Pişirme</li>
+                  <li class="ornek">Müzik Dinleme</li>
+                  <li class="ornek">Enstrüman Calma</li>
+                  <li class="ornek">Doğa Yürüyüşü</li>
+                  <li class="ornek">Resim çizmek</li>
+                  <li class="ornek">Film Veya Dizi İzlemek</li>
+                  <li class="ornek">Bir hayvan barınağını ziyaret etme</li>
+                </ul>
+              </div>
+              </div>
+              <div class="kutu kutu2">
+              <div class="gorev-ekleme-yeri">
+                <h2>Görev Ekle</h2>
+                <form id="gorev-ekle-form" class="gorev-ekle-form" action="" >
+                <label for="gorev-input">Lütfen Bir Tane Görev Giriniz</label>
+                <input id="gorev-input" type="text" placeholder="Lütfen Bir Tane Görev Giriniz" autocomplete="off">
+                <label for="gorev-tarih-input">Bitiş Tarihini Giriniz</label>
+                <input 
+                id="gorev-tarih-input"
+                type="datetime-local" name="" placeholder="Tarih Giriniz">
+                <label>Öncelik Seviyesi</label>
+                <div class="temel-radio">
+                  <div class="radio">
+                    <input type="radio" name="oncelik-seviyesi" class="oncelik" id="oncelik1">
+                    <label class="oncelik1" for="oncelik1">1</label>
+                  </div>
+                  <div class="radio">
+                    <input type="radio" name="oncelik-seviyesi" class="oncelik" id="oncelik2">
+                    <label class="oncelik2"  for="oncelik2">2</label>
+                  </div>
+                  <div class="radio">
+                    <input type="radio" name="oncelik-seviyesi" class="oncelik" id="oncelik3">
+                    <label class="oncelik3" for="oncelik3">3</label>
+                    </div>
+                </div>
+                <button class="ekle-btn btn btn-primary " type="submit">Ekle</button>
+              </form>
+              </div>
+              </div>
+               
+                <div class="kutu kutu3">
+                <div class="ornek-gorevler ornek2">
+                  <ul>
+                  <li>Yapılabilecekler listesi</li>
+                    <li class="ornek">Arkadaşlarınla Zaman Gecirme</li>
+                    <li class="ornek">Bazı Hobiler Edinme</li>
+                    <li class="ornek">Bir müze veya sanat galerisi ziyareti</li>
+                    <li class="ornek">Dil öğrenme</li>
+                    <li class="ornek">Gönüllü çalışma</li>
+                    <li class="ornek">Bir günlük tutma</li>
+                    <li class="ornek">Bir konser veya tiyatro gösterisi izleme</li>
+                    <li class="ornek">Bir fotoğraf çekme gezisi</li>
+                  </ul>
+                </div>
+              </div>
+              </div>
+            <div class="gorev-duzenle ">
+              <div class="gorev-duzenle-title">
+                <h2>GOREV DÜZENLE</h2>
+             </div>
+              
+            <div class="gorev-duzenleme-yeri"     id="gorevGuncelleForm" style="display: none;">
+           <input type="hidden" id="guncelleId">
+           <div class="gorev-duzenle-div">
+           <label for="gorev-duzenle-input">Görev Güncelle</label>
+          <input id="gorev-duzenle-input" type="text" placeholder="Görevi Güncelle" autocomplete="off">
+            </div>
+            <div class="gorev-duzenle-div">
+                <label for="gorev-tarih-input">Bitiş Tarihini Giriniz</label>
+                <input id="gorev-tarih-input" type="datetime-local" placeholder="Tarih Giriniz">
+            </div>
+            <div class="gorev-duzenle-div">
+                <label>Öncelik Seviyesi</label>
+                <div class="temel-radio">
+                    <div class="radio">
+                        <input type="radio" name="oncelik-seviyesi" class="oncelik" id="oncelik1" value="1">
+                        <label class="oncelik1" for="oncelik1">1 (En Önemli)</label>
+                    </div>
+                    <div class="radio">
+                        <input type="radio" name="oncelik-seviyesi" class="oncelik" id="oncelik2" value="2">
+                        <label class="oncelik2" for="oncelik2">2 (Orta Önemli)</label>
+                    </div>
+                    <div class="radio">
+                        <input type="radio" name="oncelik-seviyesi" class="oncelik" id="oncelik3" value="3">
+                        <label class="oncelik3" for="oncelik3">3 (Normal Görev)</label>
+                    </div>
+                </div>
+            </div>
+            <div class="gorev-duzenle-btn gorev-duzenle-div">
+              <button onclick="guncelle()">Güncelle</button>
+              <button class="iptlBtn" onclick="formuKapat()">İptal</button>
+                  </div>
+           
+                </div>
+
+             
+              <ul class="gorev-duzenle-ul">
+
+
+              </ul>
+            </div>
+            <div class="tamamlanan-gorevler">
+               <div class="tamamlanan-gorevler-title">
+                <h2>TAMAMLANAN GOREVLER</h2>
+               </div> 
+               <div class="tamamlanan-gorevler-item">
+                <ul class="tamamlanan-gorevler-item-ul"></ul>
+               </div>
+            </div>
+            <div class="takvim">
+  
+              
+
+
+
+            </div>
+      </div>
+      </div>
+        </div> 
+      </section>
+    </main>
+    <footer class="program-footer footer bg-light">
+      <div class="social">
+        <a href="https://www.facebook.com/profile.php?id=100008740694804"
+          ><i class="fab fa-facebook fa-4x"></i
+        ></a>
+        <a href="https://twitter.com/bilin_meyen422"
+          ><i class="fab fa-twitter fa-4x"></i
+        ></a>
+        <a href="https://www.youtube.com/feed/you"
+          ><i class="fab fa-youtube fa-4x"></i
+        ></a>
+        <a
+          href="https://www.linkedin.com/in/mustafa-talha-do%C4%9Fan-91ab9523a/"
+          ><i class="fab fa-linkedin fa-4x"></i
+        ></a>
+      </div>
+      <p>Copyright &copy 2025 - Görevhane</p>
+    </footer>
+
+    <script src="program js/kullanici.js"></script>
+    <script src="program js/gorevEkle.js"></script>
+    <script src="program js/program.js"></script>
+    <script src="program js/gorevlerim.js"></script>
+    <script src="program js/gorevDüzenle.js"></script>
+    <script src="program js/tamamlananGorevler.js"></script>
+    <script src="program js/server.js"></script>
+    <script src="program js/takvim.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+  </body>
+</html>

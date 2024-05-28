@@ -1,0 +1,605 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap");
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.6rem;
+  background: #fff;
+  color: #333;
+  line-height: 1.6;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  color: #333;
+  text-decoration: none;
+}
+
+h1,
+h2 {
+  font-weight: 700;
+  line-height: 1.2;
+  font-size: 5rem;
+}
+
+p {
+  margin: 1rem 0;
+}
+
+img {
+  width: 100%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* navbar */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--dark);
+  opacity: 0.8;
+  color: #fff;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 70px;
+  padding: 0 3rem;
+}
+
+.navbar a {
+  color: #fff;
+  padding: 1rem 2rem;
+  margin: 0 0.5px;
+}
+
+.navbar a:hover {
+  border-bottom: 2px solid var(--warning);
+}
+
+.navbar ul {
+  display: flex;
+}
+
+.navbar .brand {
+  font-weight: 400;
+}
+
+.navbar h1 {
+  font-size: 3rem;
+}
+
+.navbar span {
+  color: var(--warning);
+}
+
+/* header */
+
+.main-header {
+  background-image: url("../img/computer-2242264_1280.jpg ");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center top;
+  height: 30vh;
+  color: #fff;
+  position: relative;
+}
+
+.main-header .content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+}
+
+.main-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.main-header * {
+  z-index: 5;
+}
+
+.main-header .content h1 {
+  font-size: 5.5rem;
+}
+
+.main-header .content p {
+  font-size: 2.3rem;
+  max-width: 60rem;
+  margin: 2rem 0 3rem;
+}
+
+/* BİLGİLENDİREME */
+.bilgilendirme-baslik {
+  text-align: center;
+  color: black;
+  margin: 10px;
+}
+.aciklamalar {
+  display: flex;
+}
+.aciklamalar-item {
+  flex: 1;
+  border: 10px solid #d8ae7e;
+}
+.aciklamalar .card {
+  height: 250px;
+}
+.aciklamalar-left p {
+  text-align: end;
+}
+.aciklamalar-right {
+  text-align: start;
+}
+.bilgilendirme {
+  color: white;
+}
+
+.hakkımızda {
+  padding: 2rem;
+}
+.hakkımızda-title {
+  text-align: center;
+}
+.hakkımızda h2,
+h3 {
+  font-size: 3rem;
+  font-weight: 700;
+  padding: 5px;
+}
+.card p {
+  padding: 15px;
+  font-size: 2rem;
+}
+.hakkımızda .card {
+  margin: 5px;
+}
+.card h3 {
+  text-align: center;
+}
+.card {
+  box-shadow: 6px 7px 11px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 6px 7px 11px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 6px 7px 11px 0px rgba(0, 0, 0, 0.75);
+  height: 260px;
+}
+.cards {
+  flex: 1;
+}
+
+/* contact */
+.iletisim-left-row {
+  padding: 30px;
+  font-weight: 600;
+  margin-left: 15px;
+  box-shadow: 6px 7px 11px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 6px 7px 11px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 6px 7px 11px 0px rgba(0, 0, 0, 0.75);
+}
+.iletisim-right-row {
+  width: 1000px;
+  box-shadow: 6px 7px 11px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 6px 7px 11px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 6px 7px 11px 0px rgba(0, 0, 0, 0.75);
+}
+.iletisim h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+}
+.iletisim-container {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+
+.iletisim-form {
+  width: 100%;
+  padding: 2rem 0;
+}
+
+.iletisim-form label {
+  text-align: center;
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 3rem;
+}
+.iletisim-form input::placeholder {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.iletisim-form .form-control {
+  margin-bottom: 1.5rem;
+}
+
+.iletisim-form input {
+  width: 100%;
+  padding: 5px;
+  height: 40px;
+  border: 1px solid #f5f5f5;
+}
+
+.iletisim-form .btn {
+  margin-top: 20px;
+}
+
+.iletisim h2 {
+  font-size: 4rem;
+}
+.iletisim .btn {
+  width: 100%;
+}
+
+/* footer */
+.footer {
+  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 200px;
+}
+
+.footer a {
+  color: var(--danger);
+}
+
+.footer a:hover {
+  opacity: 0.7;
+}
+
+.footer .social a {
+  margin-right: 10px;
+}
+
+/* kayit */
+.kayit {
+  margin-top: 120px;
+  color: white;
+  text-align: center;
+}
+.kayit h1 {
+  padding-top: 20px;
+}
+.kayit label {
+  font-size: 3rem;
+  padding: 0 10px;
+}
+.bolum {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+.bolum input,
+.bolum select {
+  font-size: 2rem;
+  width: 50%;
+  margin: auto;
+  border: 2px solid var(--dark);
+  border-radius: 5px;
+  height: 4rem;
+}
+.bolum input::placeholder {
+  font-size: 2rem;
+  text-align: center;
+  font-weight: 400;
+}
+.kayit-footer {
+  position: static;
+  bottom: 0;
+  width: 100%;
+}
+.giris-footer {
+  position: static;
+  width: 100%;
+  bottom: 0;
+}
+.kayit button {
+  margin: 50px;
+  width: 50%;
+  font-size: 3rem;
+}
+.kayit.row {
+  border-radius: 20px;
+}
+
+/* PROGRAM */
+.main-gorev {
+  margin-top: 100px;
+}
+.kullanici {
+  display: flex;
+  justify-content: center;
+}
+.kullanici i {
+  font-size: 4rem;
+}
+.kullanici-body {
+  font-weight: 700;
+  padding-left: 10px;
+}
+.kullanici-cikis button {
+  width: 200px;
+  background-color: var(--danger);
+  color: #fff;
+  height: 30px;
+  font-size: 20px;
+  border-radius: 15px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+.colon1 {
+  text-align: center;
+  font-size: 3rem;
+}
+.görev .list {
+  display: flex;
+  justify-content: space-evenly;
+  color: #fff;
+}
+.görev .item {
+  padding: 10px;
+  margin: 5px;
+  border: 5px solid var(--dark);
+  width: 400px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.görev .item:hover {
+  background-color: var(--info);
+}
+.colon2 {
+  border-radius: 5px solid var(--dark);
+  height: 1000px;
+}
+.main {
+  margin-bottom: 400px;
+}
+.colon2 {
+  height: 100%;
+  width: 100%;
+  border: 10px solid var(--warning);
+  border-radius: 10px;
+}
+.gorev-ekle {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+}
+
+.gorev-ekle .ornek-gorevler li {
+  display: flex;
+  justify-content: space-between;
+  width: 250px;
+  border: 2px solid var(--info);
+  font-size: 30px;
+  background-color: var(--info);
+  border-radius: 10px;
+  padding: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.takvim {
+  display: none;
+}
+.gorev-ekle .ornek2 {
+  display: grid;
+  justify-content: end;
+}
+
+.gorev-ekle .gorev-ekleme-yeri,
+.gorev-ekle-form {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.gorev-ekle .ekle-btn {
+  font-size: 2rem;
+  margin-top: 20px;
+  width: 100;
+}
+.gorev-ekle .kutu2 input {
+  margin-top: 15px;
+  width: 50%;
+  height: 50px;
+  font-size: 2rem;
+  text-align: center;
+}
+.gorev-ekle .kutu2 label {
+  text-align: center;
+  font-size: 3rem;
+  margin: 10px;
+}
+.gorev-ekle .gorev-yazdirma-yeri {
+  text-align: center;
+}
+.gorev-ekle .gorev-yazdir-item {
+  font-size: 2rem;
+  padding: 20px;
+  margin: 10px;
+  background-color: var(--info);
+  color: #fff;
+  position: relative;
+}
+.gorev-ekle .ornek:hover {
+  cursor: pointer;
+}
+.gorev-ekle .temel-radio {
+  display: flex;
+}
+.gorev-ekle .temel-radio label {
+  font-size: 25px;
+}
+.gorev-ekle .temel-radio input {
+  margin: 0;
+}
+.gorev-ekle .saga-yazdir {
+  position: absolute;
+  right: 0;
+  font-size: 30px;
+  padding-right: 10px;
+}
+.gorev-ekle .saga-yazdir:hover {
+  cursor: pointer;
+}
+.gorev-ekle .gorev1 {
+  background-color: var(--danger);
+}
+.gorevlerim {
+  text-align: center;
+}
+.gorevlerim-title {
+  color: #fff;
+}
+
+.gorev-yazdir-item {
+  font-size: 30px;
+  background-color: var(--dark);
+  width: 350px;
+  height: 250px;
+  margin: 10px;
+  padding: 10px;
+  color: white;
+  border-radius: 20px;
+}
+.gorevlerim-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.gorev-duzenle-item {
+  font-size: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  width: 400px;
+  height: 300px;
+  box-shadow: 22px 28px 12px 0px rgba(0, 0, 0, 0.1);
+}
+.gorev-inp {
+  margin-top: 5x;
+  margin-bottom: 30px;
+}
+
+.icons {
+  margin-top: 20px;
+  cursor: pointer;
+}
+.icons i {
+  margin-right: 15px;
+  padding: 10px;
+  border: 3px solid var(--info);
+  border-radius: 10px;
+}
+.icons-checkbox {
+  padding-top: 10px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+.gorev-duzenle ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.gorev-duzenle {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+
+.gorev-duzenle-title {
+  text-align: center;
+  font-size: 25px;
+}
+.gorev-duzenleme-yeri {
+  height: 400px;
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr 1fr;
+}
+.gorev-duzenle-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 500px;
+  margin-top: 30px;
+  box-shadow: 22px 28px 12px 0px rgba(0, 0, 0, 0.1);
+}
+.gorev-duzenleme-yeri label {
+  font-size: 25px;
+}
+.gorev-duzenle input {
+  text-align: center;
+  width: 300px;
+  height: 35px;
+}
+.gorev-duzenle-div .oncelik {
+  width: 30px;
+}
+.gorev-duzenle-div .temel-radio {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.gorev-duzenle-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.gorev-duzenle button {
+  cursor: pointer;
+  margin-top: 10px;
+  margin-left: 30px;
+  padding: 25px;
+  width: 200px;
+}
+.gorev-tamamlandi {
+  text-decoration: line-through;
+}
+.takvim {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.gorev-tamamla-item {
+  font-size: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  width: 400px;
+  height: 300px;
+  box-shadow: 22px 28px 12px 0px rgba(0, 0, 0, 0.1);
+}
+.tamamlanan-gorevler-item-ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}

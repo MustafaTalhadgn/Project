@@ -45,10 +45,10 @@
             <h2>Neden Plan Yapmalıyız</h2>
           </div>
           <div class="aciklamalar">
-            <div class="aciklamalar-item">
+            <div class="aciklamalar-item aciklamalar-left">
               <div class="aciklama card bg-info">
                 <h3>Hedef Belirleme ve Yol Haritası Oluşturma</h3>
-                <p>
+                <p style="text-align: end;">
                   Plan yapmak, bireylerin veya organizasyonların hedeflerini
                   netleştirmelerine ve bu hedeflere nasıl ulaşacaklarını
                   belirlemelerine yardımcı olur. Plan olmadan, istenen sonuca
@@ -75,7 +75,7 @@
                 </p>
               </div>
             </div>
-            <div class="aciklamalar-item">
+            <div class="aciklamalar-item aciklamalar-right">
               <div class="aciklama card bg-primary">
                 <h3>Motivasyonu Artırma</h3>
                 <p>
@@ -160,38 +160,50 @@
           </div>
         </div>
       </section>
-      <section id="iletisim" class="iletisim">
-        <div class="row">
-          <div class="bg-light">
-            <h2>İletişim</h2>
-            <form action="" class="iletisim-form">
-              <div class="form-control">
-                <label for="name">İsim</label>
-                <input type="text" id="name" placeholder="İsminizi Giriniz" />
-              </div>
-              <div class="form-control">
-                <label for="name">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  placeholder="E-Postanızı Giriniz"
-                />
-              </div>
-              <div class="form-control">
-                <label for="name">Telefon No</label>
-                <input
-                  type="text"
-                  id="phone"
-                  placeholder="Telefon Numaranızı Giriniz"
-                />
-              </div>
 
-              <button type="submit" id="ilet-btn" class="btn btn-primary">
-                Gönder
-              </button>
-            </form>
+      <section id="iletisim" class="iletisim">
+          <h2>İletişim</h2>
+        <div class="iletisim-container">
+            
+          <div class="iletisim-left iletisim-left-row">
+            <p>
+              Gorevhane web sayfamızdaki herhangi bir hata veya geri bildirimle ilgili bize ulaşmak isterseniz, lütfen yan taraftaki iletişim formunu doldurun. Size daha iyi hizmet verebilmemiz için doğru bilgilerle formu doldurmanız önemlidir.Biz size en kısa sürede ulaşacağız
+            </p>
+
+          </div>
+          <div class=" iletisim-right iletisim-right-row ">
+            <div class="bg-light">
+              
+              <form action="" class="iletisim-form">
+                <div class="form-control">
+                  <label for="name">İsim</label>
+                  <input type="text" id="name" placeholder="İsminizi Giriniz" />
+                </div>
+                <div class="form-control">
+                  <label for="name">Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    placeholder="E-Postanızı Giriniz"
+                  />
+                </div>
+                <div class="form-control">
+                  <label for="name">Telefon No</label>
+                  <input
+                    type="text"
+                    id="phone"
+                    placeholder="Telefon Numaranızı Giriniz"
+                  />
+                </div>
+  
+                <button type="submit" id="ilet-btn" class="btn btn-primary">
+                  Gönder
+                </button>
+              </form>
+            </div>
           </div>
         </div>
+     
       </section>
     </main>
     <footer class="footer bg-light">
