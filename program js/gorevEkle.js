@@ -1,78 +1,98 @@
-let gorevlerim = [];
-let inputtext = document.querySelector("#gorev-input");
-let inputDate = document.querySelector("#gorev-tarih-input");
-let radioButtons = document.getElementsByName("oncelik-seviyesi");
-let gorevYazdir = document.querySelector(".girilen-gorev-ul");
-let form = document.querySelector(".gorev-ekle-form");
+import { db } from "./firebase.js"; // firebase.js dosyasını içe aktar
+
+import {
+  addDoc,
+  collection,
+  getDocs,
+  query,
+  where,
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+let gorevler = [];
+const inputtext = document.querySelector("#gorev-input");
+const inputDate = document.querySelector("#gorev-tarih-input");
+const radioButtons = document.getElementsByName("oncelik-seviyesi");
+const form = document.querySelector(".gorev-ekle-form");
 const ornekGorevler = document.querySelectorAll(".ornek");
 
 form.addEventListener("submit", gorev);
 ornekGorevler.forEach((li) => {
   li.addEventListener("click", function () {
-    // Tıklanan örnek görevin metnini al
     const selectedGorev = this.textContent;
-
-    // Alınan metni input elemanına atayın
     const gorevInput = document.getElementById("gorev-input");
     gorevInput.value = selectedGorev;
   });
 });
-function gorev(event) {
+
+async function gorev(event) {
   event.preventDefault();
-  if (inputtext.value.trim() == "") {
-    alert("lütfen görev giriniz");
+  if (inputtext.value.trim() === "" || inputDate.value === "") {
+    alert("Lütfen boş yerleri doldurunuz");
   } else {
-    arayüzGorevEkle();
+    await arayuzGorevEkle();
   }
 }
-function arayüzGorevEkle() {
-  var selectedValue;
+
+async function arayuzGorevEkle() {
+  let selectedValue;
   radioButtons.forEach((radioButton) => {
-    // Seçilen radio button kontrolü
     if (radioButton.checked) {
       let selectClass = radioButton.parentElement;
-
       selectedValue = selectClass.children[1].textContent;
     }
   });
 
-  gorevlerim.push({
-    gorevId: Math.floor(Math.random() * 9999999),
+  const userid = await fetchUserId();
+
+  if (!userid) {
+    alert("Kullanıcı ID alınamadı. Lütfen tekrar deneyin.");
+    return;
+  }
+
+  const yeniGorev = {
     gorevAd: inputtext.value.trim(),
     gorevBaslangicTarihi: new Date().toLocaleString(),
     gorevBitisTarihi: inputDate.value,
     oncelikSeviyesi: selectedValue,
-    yapıldımı: false,
-    kullaniciId: "0",
-  });
+    yapildimi: false,
+    kullaniciId: userid,
+  };
+
+  gorevler.push(yeniGorev);
+
   inputtext.value = "";
   inputDate.value = "";
-  selectedValue = false;
-  veriTabanınaYazdir();
+  radioButtons.forEach((radioButton) => (radioButton.checked = false));
+  await veriTabaninaYazdir(yeniGorev);
 }
 
-function veriTabanınaYazdir() {
-  var gorevGonder = new XMLHttpRequest();
-  gorevGonder.open(
-    "POST",
-    "https://gorevhanekayit-default-rtdb.firebaseio.com/gorevler.json",
-    true
-  );
-  gorevGonder.setRequestHeader("Content-Type", "application/json");
+async function fetchUserId() {
+  try {
+    const q = query(collection(db, "users"), where("giris", "==", true));
+    const querySnapshot = await getDocs(q);
 
-  gorevGonder.onload = function () {
-    if (gorevGonder.status >= 200 && gorevGonder.status < 400) {
-      console.log("Görev başarıyla kaydedildi.");
+    if (!querySnapshot.empty) {
+      let userId = null;
+      querySnapshot.forEach((doc) => {
+        userId = doc.id;
+      });
+      return userId;
     } else {
-      console.error("Görev kaydedilirken bir hata oluştu.");
+      return null;
     }
-  };
+  } catch (error) {
+    console.error("Kullanıcı ID çekme hatası: ", error);
+    return null;
+  }
+}
 
-  gorevGonder.onerror = function () {
-    console.error("İstek yapılamadı.");
-  };
-
-  var veri = JSON.stringify(gorevlerim[gorevlerim.length - 1]); // Son eklenen görevin verisini al
-  gorevGonder.send(veri);
-  console.log(gorevlerim);
+async function veriTabaninaYazdir(gorev) {
+  try {
+    await addDoc(collection(db, "tasks"), gorev);
+    console.log("Görev başarıyla kaydedildi.");
+    // Görevlerim sayfasına görevlerin güncellendiğini bildiren bir event yayınla
+    window.dispatchEvent(new CustomEvent("gorevEklendi"));
+  } catch (error) {
+    console.error("Görev kaydedilirken bir hata oluştu: ", error);
+  }
 }

@@ -1,30 +1,58 @@
-const BASE_URL2 =
-  "https://gorevhanekayit-default-rtdb.firebaseio.com/gorevler.json";
+import { db } from "./firebase.js"; // firebase.js dosyasını içe aktar
 
-const gorevDüzenle = document.querySelector(".gorevitem3");
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-gorevDüzenle.addEventListener("click", () => {
-  duzenleGorevleriYazdir();
-});
+// Kullanıcı ID'sini çekmek için fonksiyon
+async function fetchUserId() {
+  try {
+    const q = query(collection(db, "users"), where("giris", "==", true));
+    const querySnapshot = await getDocs(q);
 
+    if (!querySnapshot.empty) {
+      let userId = null;
+      querySnapshot.forEach((doc) => {
+        userId = doc.id;
+      });
+      return userId;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error("Kullanıcı ID çekme hatası: ", error);
+    return null;
+  }
+}
+
+// Görevleri çekip döndüren asenkron fonksiyon
 async function veriCek() {
   try {
-    const response = await fetch(`${BASE_URL2}`);
-    if (!response.ok) {
-      throw new Error("Ağ yanıtı başarılı olmadı");
+    const userId = await fetchUserId();
+
+    if (!userId) {
+      console.error("Kullanıcı ID alınamadı.");
+      return [];
     }
-    const data = await response.json();
 
-    const gorevlerim = [];
+    const q = query(
+      collection(db, "tasks"),
+      where("kullaniciId", "==", userId)
+    );
+    const querySnapshot = await getDocs(q);
 
-    Object.keys(data).forEach((key) => {
-      const item = data[key];
-      if (item) {
-        gorevlerim.push({ id: key, ...item });
-      }
-    });
+    const tasks = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
-    return gorevlerim;
+    return tasks;
   } catch (error) {
     console.error("Veri çekilirken hata oluştu:", error);
     return [];
@@ -79,16 +107,17 @@ async function duzenleGorevleriYazdir() {
 // Görev Silme Fonksiyonu
 async function silGorev(event) {
   const gorevId = event.target.closest(".gorev-duzenle-item").dataset.id;
-  const silURL = `https://gorevhanekayit-default-rtdb.firebaseio.com/gorevler/${gorevId}.json`;
-
   try {
-    const response = await fetch(silURL, { method: "DELETE" });
-    if (!response.ok) {
-      throw new Error("Görev silinirken hata oluştu");
-    }
-
-    // Başarılı silme işleminden sonra DOM'dan da sil
+    await deleteDoc(doc(db, "tasks", gorevId));
     event.target.closest(".gorev-duzenle-item").remove();
+
+    // Görev silindikten sonra özel olayı tetikle
+    const eventSil = new CustomEvent("gorevSilindi", {
+      detail: {
+        gorevId,
+      },
+    });
+    window.dispatchEvent(eventSil);
   } catch (error) {
     console.error("Görev silinirken hata oluştu:", error);
   }
@@ -104,7 +133,7 @@ function duzenleGorev(event) {
   const gorevOncelik = gorev.dataset.oncelik;
 
   document.getElementById("gorev-duzenle-input").value = gorevAd;
-  document.getElementById("gorev-tarih-input").value = gorevBitisTarihi;
+  document.getElementById("gorev-tarih-input2").value = gorevBitisTarihi;
 
   const oncelikInput = document.querySelector(
     `input[name="oncelik-seviyesi"][value="${gorevOncelik}"]`
@@ -122,33 +151,28 @@ function duzenleGorev(event) {
 async function guncelle() {
   const gorevId = document.getElementById("guncelleId").value;
   const gorevAd = document.getElementById("gorev-duzenle-input").value;
-  const gorevBitisTarihi = document.getElementById("gorev-tarih-input").value;
+  const gorevBitisTarihi = document.getElementById("gorev-tarih-input2").value;
   const oncelikSeviyesi = document.querySelector(
     'input[name="oncelik-seviyesi"]:checked'
   ).value;
 
-  const guncelURL = `https://gorevhanekayit-default-rtdb.firebaseio.com/gorevler/${gorevId}.json`;
-
   try {
-    const response = await fetch(guncelURL);
-    if (!response.ok) {
-      throw new Error("Görev güncellenirken hata oluştu");
-    }
-    const gorev = await response.json();
-
-    gorev.gorevAd = gorevAd;
-    gorev.gorevBitisTarihi = gorevBitisTarihi;
-    gorev.oncelikSeviyesi = oncelikSeviyesi;
-
-    const responseUpdate = await fetch(guncelURL, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(gorev),
+    await updateDoc(doc(db, "tasks", gorevId), {
+      gorevAd,
+      gorevBitisTarihi,
+      oncelikSeviyesi,
     });
 
-    if (!responseUpdate.ok) {
-      throw new Error("Görev güncellenirken hata oluştu");
-    }
+    // Görev güncellendikten sonra özel olayı tetikle
+    const event = new CustomEvent("gorevGuncellendi", {
+      detail: {
+        gorevId,
+        gorevAd,
+        gorevBitisTarihi,
+        oncelikSeviyesi,
+      },
+    });
+    window.dispatchEvent(event);
 
     duzenleGorevleriYazdir();
     formuKapat();
@@ -156,7 +180,6 @@ async function guncelle() {
     console.error("Görev güncellenirken hata oluştu:", error);
   }
 }
-
 function formuKapat() {
   document.getElementById("gorevGuncelleForm").style.display = "none";
 }
@@ -165,39 +188,30 @@ function formuKapat() {
 async function toggleGorev(event) {
   const checkbox = event.target;
   const gorevId = checkbox.closest(".gorev-duzenle-item").dataset.id;
-  const yapildimi = checkbox.checked;
-
-  const guncelURL = `https://gorevhanekayit-default-rtdb.firebaseio.com/gorevler/${gorevId}.json`;
-
   try {
-    const response = await fetch(guncelURL);
-    if (!response.ok) {
-      throw new Error("Görev güncellenirken hata oluştu");
-    }
-    const gorev = await response.json();
-
-    gorev.yapıldımı = yapildimi;
-
-    const responseUpdate = await fetch(guncelURL, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(gorev),
+    await updateDoc(doc(db, "tasks", gorevId), {
+      yapildimi: checkbox.checked,
     });
 
-    if (!responseUpdate.ok) {
-      throw new Error("Görev güncellenirken hata oluştu");
-    }
-
-    // Checkbox işaretli ise görevin üstünü çiz, aksi takdirde kaldır
-    if (yapildimi) {
-      checkbox.nextElementSibling.classList.add("gorev-tamamlandi");
-    } else {
-      checkbox.nextElementSibling.classList.remove("gorev-tamamlandi");
-    }
+    checkbox.nextElementSibling.classList.toggle(
+      "gorev-tamamlandi",
+      checkbox.checked
+    );
   } catch (error) {
-    console.error("Görev güncellenirken hata oluştu:", error);
+    console.error("Görev durumu güncellenirken hata oluştu:", error);
   }
 }
+// Fonksiyonları global kapsamda erişilebilir hale getirin
+window.silGorev = silGorev;
+window.duzenleGorev = duzenleGorev;
+window.guncelle = guncelle;
+window.formuKapat = formuKapat;
+window.toggleGorev = toggleGorev;
 
 // Sayfa yüklendiğinde görevleri çek ve göster
 document.addEventListener("DOMContentLoaded", duzenleGorevleriYazdir);
+
+// Görev eklendiğinde listeyi güncelle
+window.addEventListener("gorevEklendi", async () => {
+  duzenleGorevleriYazdir();
+});

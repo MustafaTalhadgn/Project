@@ -1,3 +1,31 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  collection,
+  doc,
+  getDocs,
+  getFirestore,
+  query,
+  updateDoc,
+  where,
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyCyDMHAjxUIGNYJfiN4-I_6riX9UjebSOM",
+  authDomain: "gorevler-47350.firebaseapp.com",
+  projectId: "gorevler-47350",
+  storageBucket: "gorevler-47350.appspot.com",
+  messagingSenderId: "1039990050808",
+  appId: "1:1039990050808:web:dc4687f9690e7366d8100d",
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+// Initialize Firestore
+const db = getFirestore(app);
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("girisForm");
 
@@ -8,30 +36,25 @@ document.addEventListener("DOMContentLoaded", () => {
     const sifre = document.getElementById("sifre").value;
 
     try {
-      const response = await fetch(
-        `https://gorevhanekayit-default-rtdb.firebaseio.com/1.json`
+      const q = query(
+        collection(db, "users"),
+        where("email", "==", email),
+        where("sifre", "==", sifre)
       );
-      const data = await response.json();
+      const querySnapshot = await getDocs(q);
 
-      let userFound = false;
-      let userId = null;
+      if (querySnapshot.empty) {
+        alert("Hatalı email veya şifre.");
+      } else {
+        let userId = null;
 
-      // Kullanıcıları döngü ile kontrol et
-      for (const id in data) {
-        const user = data[id];
-        if (user.email === email && user.sifre === sifre) {
-          userFound = true;
-          userId = id;
-          break;
-        }
-      }
+        querySnapshot.forEach((doc) => {
+          userId = doc.id;
+        });
 
-      if (userFound) {
         await kullanıcıGirisi(userId);
         alert("Giriş başarılı!");
         window.location.href = "program.html";
-      } else {
-        alert("Hatalı email veya şifre.");
       }
     } catch (error) {
       console.error("Hata:", error);
@@ -40,30 +63,13 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const kullanıcıGirisi = async (id) => {
-    const guncelURL = `https://gorevhanekayit-default-rtdb.firebaseio.com/1/${id}.json`;
+    const userRef = doc(db, "users", id);
 
     try {
-      const response = await fetch(guncelURL);
-      if (!response.ok) {
-        throw new Error("Kullanıcı bilgisi alınırken hata oluştu");
-      }
-
-      const kullanıcı = await response.json();
-      // Kullanıcı bilgilerini loglayın
-
       // Kullanıcı giriş yaptı, giris alanını true yapın
-      kullanıcı.giris = true;
-
-      // Kullanıcı bilgilerini güncelleme işlemleri
-      const responseUpdate = await fetch(guncelURL, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(kullanıcı),
+      await updateDoc(userRef, {
+        giris: true,
       });
-
-      if (!responseUpdate.ok) {
-        throw new Error("Kullanıcı güncellenirken hata oluştu");
-      }
 
       console.log("Kullanıcı başarıyla güncellendi");
     } catch (error) {

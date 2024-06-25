@@ -1,28 +1,54 @@
-const BASE_URL3 =
-  "https://gorevhanekayit-default-rtdb.firebaseio.com/gorevler.json";
+import { db } from "./firebase.js"; // firebase.js dosyasını içe aktar
 
-const tamamlananGorev = document.querySelector(".gorevitem4");
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-tamamlananGorev.addEventListener("click", () => {
-  tamamlananGorevleriYazdir();
-});
+// Kullanıcı ID'sini çekmek için fonksiyon
+async function fetchUserId() {
+  try {
+    const q = query(collection(db, "users"), where("giris", "==", true));
+    const querySnapshot = await getDocs(q);
 
+    if (!querySnapshot.empty) {
+      let userId = null;
+      querySnapshot.forEach((doc) => {
+        userId = doc.id;
+      });
+      return userId;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error("Kullanıcı ID çekme hatası: ", error);
+    return null;
+  }
+}
+
+// Tamamlanan görevleri çekip döndüren asenkron fonksiyon
 async function tamamlananveriCek() {
   try {
-    const response = await fetch(`${BASE_URL3}`);
-    if (!response.ok) {
-      throw new Error("Ağ yanıtı başarılı olmadı");
+    const userId = await fetchUserId();
+
+    if (!userId) {
+      console.error("Kullanıcı ID alınamadı.");
+      return [];
     }
-    const data = await response.json();
 
-    const gorevlerim = [];
+    const q = query(
+      collection(db, "tasks"),
+      where("kullaniciId", "==", userId),
+      where("yapildimi", "==", true)
+    );
+    const querySnapshot = await getDocs(q);
 
-    Object.keys(data).forEach((key) => {
-      const item = data[key];
-      if (item) {
-        gorevlerim.push({ id: key, ...item });
-      }
-    });
+    const gorevlerim = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
     return gorevlerim;
   } catch (error) {
@@ -37,7 +63,7 @@ function tamamlananliEkle(gorevlerim) {
   );
   gorevTamamlaYazdir.innerHTML = "";
   gorevlerim.forEach((gorev) => {
-    if (gorev.yapıldımı) {
+    if (gorev.yapildimi) {
       let li = document.createElement("li");
       li.className = "gorev-tamamla-item";
       li.dataset.id = gorev.id;
@@ -56,17 +82,27 @@ function tamamlananliEkle(gorevlerim) {
       }
 
       li.innerHTML = `
-          <div class="gorev-duzenle-gorevler">
-            <span class="gorev-ad">${gorev.gorevAd}</span><br>
-            <span class="gorev-bitis-tarihi">${gorev.gorevBitisTarihi}</span>
-          </div>
-        `;
+        <div class="gorev-duzenle-gorevler">
+          <span class="gorev-ad">${gorev.gorevAd}</span><br>
+          <span class="gorev-bitis-tarihi">${gorev.gorevBitisTarihi}</span>
+        </div>
+      `;
       gorevTamamlaYazdir.appendChild(li);
     }
   });
 }
 
 async function tamamlananGorevleriYazdir() {
-  const gorevlerim = await veriCek();
+  const gorevlerim = await tamamlananveriCek();
   tamamlananliEkle(gorevlerim);
+}
+
+// Tamamlanan görevler butonuna tıklanınca görevleri yazdır
+const tamamlananGorev = document.querySelector(".gorevitem4");
+if (tamamlananGorev) {
+  tamamlananGorev.addEventListener("click", () => {
+    tamamlananGorevleriYazdir();
+  });
+} else {
+  console.error(".gorevitem4 elementi bulunamadı.");
 }

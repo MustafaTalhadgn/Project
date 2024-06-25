@@ -95,7 +95,7 @@ img {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center top;
-  height: 30vh;
+  height: 45vh;
   color: #fff;
   position: relative;
 }
@@ -333,9 +333,19 @@ h3 {
 .main-gorev {
   margin-top: 100px;
 }
+.kullanici-girisi {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .kullanici {
+  padding: 10px;
   display: flex;
   justify-content: center;
+  border: 10px solid #3abef9;
+  width: 450px;
+  align-items: center;
+  border-radius: 20px;
 }
 .kullanici i {
   font-size: 4rem;
@@ -384,7 +394,7 @@ h3 {
 .colon2 {
   height: 100%;
   width: 100%;
-  border: 10px solid var(--warning);
+  border: 10px solid #3572ef;
   border-radius: 10px;
 }
 .gorev-ekle {
@@ -602,4 +612,10 @@ h3 {
 .tamamlanan-gorevler-item-ul {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.kalan-sure {
+  font-size: 13px;
+}
+.section {
+  display: none;
 }

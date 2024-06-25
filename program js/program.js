@@ -36,7 +36,7 @@ menuGorevDuzenle.addEventListener("click", (e) => {
 menuTamamlananGorevler.addEventListener("click", (e) => {
   gorevEkle.style.display = "none";
   gorevDuzenle.style.display = "none";
-  tamamlananGorevler.style.display = "none";
+  gorevGöster.style.display = "none";
   takvim.style.display = "none";
   tamamlananGorevler.style.display = "grid";
 
@@ -46,7 +46,7 @@ menuTakvim.addEventListener("click", (e) => {
   gorevEkle.style.display = "none";
   gorevDuzenle.style.display = "none";
   tamamlananGorevler.style.display = "none";
-  takvim.style.display = "none";
+  gorevGöster.style.display = "none";
   takvim.style.display = "block";
   e.preventDefault();
 });

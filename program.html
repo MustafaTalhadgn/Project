@@ -69,7 +69,7 @@
         </div>
         <div class="colon2">
           <div class="satir">
-            <div class="gorevlerim">
+            <div class="section gorevlerim">
               <div gorevlerim-title>
                 <h2>Görevlerim</h2>
               </div>
@@ -77,7 +77,7 @@
               
              </ul>
             </div>
-            <div class="gorev-ekle">
+            <div class="section gorev-ekle">
               <div class="kutu kutu1 ">
                 <div class="ornek-gorevler ornek1">
                 <ul>
@@ -141,7 +141,7 @@
                 </div>
               </div>
               </div>
-            <div class="gorev-duzenle ">
+            <div class="section gorev-duzenle ">
               <div class="gorev-duzenle-title">
                 <h2>GOREV DÜZENLE</h2>
              </div>
@@ -153,23 +153,23 @@
           <input id="gorev-duzenle-input" type="text" placeholder="Görevi Güncelle" autocomplete="off">
             </div>
             <div class="gorev-duzenle-div">
-                <label for="gorev-tarih-input">Bitiş Tarihini Giriniz</label>
-                <input id="gorev-tarih-input" type="datetime-local" placeholder="Tarih Giriniz">
+                <label for="gorev-tarih-input2">Bitiş Tarihini Giriniz</label>
+                <input id="gorev-tarih-input2" type="datetime-local" placeholder="Tarih Giriniz">
             </div>
             <div class="gorev-duzenle-div">
                 <label>Öncelik Seviyesi</label>
                 <div class="temel-radio">
                     <div class="radio">
                         <input type="radio" name="oncelik-seviyesi" class="oncelik" id="oncelik1" value="1">
-                        <label class="oncelik1" for="oncelik1">1 (En Önemli)</label>
+                        <label class="oncelik1" for="oncelik1">1</label>
                     </div>
                     <div class="radio">
                         <input type="radio" name="oncelik-seviyesi" class="oncelik" id="oncelik2" value="2">
-                        <label class="oncelik2" for="oncelik2">2 (Orta Önemli)</label>
+                        <label class="oncelik2" for="oncelik2">2</label>
                     </div>
                     <div class="radio">
                         <input type="radio" name="oncelik-seviyesi" class="oncelik" id="oncelik3" value="3">
-                        <label class="oncelik3" for="oncelik3">3 (Normal Görev)</label>
+                        <label class="oncelik3" for="oncelik3">3 </label>
                     </div>
                 </div>
             </div>
@@ -186,7 +186,7 @@
 
               </ul>
             </div>
-            <div class="tamamlanan-gorevler">
+            <div class="section tamamlanan-gorevler">
                <div class="tamamlanan-gorevler-title">
                 <h2>TAMAMLANAN GOREVLER</h2>
                </div> 
@@ -194,7 +194,7 @@
                 <ul class="tamamlanan-gorevler-item-ul"></ul>
                </div>
             </div>
-            <div class="takvim">
+            <div class="section takvim">
   
               
 
@@ -225,14 +225,14 @@
       <p>Copyright &copy 2025 - Görevhane</p>
     </footer>
 
-    <script src="program js/kullanici.js"></script>
-    <script src="program js/gorevEkle.js"></script>
+    <script type="module" src="program js/kullanici.js"></script>
+    <script type="module" src="program js/firebase.js"></script>
+    <script type="module" src="program js/gorevEkle.js"></script>
     <script src="program js/program.js"></script>
-    <script src="program js/gorevlerim.js"></script>
-    <script src="program js/gorevDüzenle.js"></script>
-    <script src="program js/tamamlananGorevler.js"></script>
-    <script src="program js/server.js"></script>
-    <script src="program js/takvim.js"></script>
+    <script type="module" src="program js/gorevlerim.js"></script>
+    <script type="module" src="program js/gorevDüzenle.js"></script>
+    <script type="module" src="program js/tamamlananGorevler.js"></script>
+    <script type="module" src="program js/takvim.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
   </body>
 </html>

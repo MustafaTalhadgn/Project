@@ -1,63 +1,93 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  getFirestore,
+  query,
+  updateDoc,
+  where,
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyCyDMHAjxUIGNYJfiN4-I_6riX9UjebSOM",
+  authDomain: "gorevler-47350.firebaseapp.com",
+  projectId: "gorevler-47350",
+  storageBucket: "gorevler-47350.appspot.com",
+  messagingSenderId: "1039990050808",
+  appId: "1:1039990050808:web:dc4687f9690e7366d8100d",
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+// Initialize Firestore
+const db = getFirestore(app);
+
 const dataAl = async () => {
-  const data = await fetch(
-    `https://gorevhanekayit-default-rtdb.firebaseio.com/1.json`
-  );
-  const kullanıcı = await data.json();
-  var userid = null;
-  for (var id in kullanıcı) {
-    const users = kullanıcı[id];
-    if (users.giris == true) {
-      userid = id;
-    }
+  const q = query(collection(db, "users"), where("giris", "==", true));
+  const querySnapshot = await getDocs(q);
+
+  if (!querySnapshot.empty) {
+    let userId = null;
+    querySnapshot.forEach((doc) => {
+      userId = doc.id;
+    });
+    return userId;
+  } else {
+    return null;
   }
-  return userid;
 };
 
 const kullanıcıGöster = async (id) => {
-  const dataAl2 = await fetch(
-    `https://gorevhanekayit-default-rtdb.firebaseio.com/1/${id}.json`
-  );
+  if (!id) return;
 
-  const kullanıcıGirisi = await dataAl2.json();
-  const yazdir = document.querySelector(".kullanici");
-  const div = document.createElement("div");
-  div.className = "kullanici-body";
-  div.innerHTML = `
-  ${kullanıcıGirisi.isim} ${kullanıcıGirisi.soyisim}
-  
-  `;
-  yazdir.appendChild(div);
+  const userRef = doc(db, "users", id);
+  const userSnap = await getDoc(userRef);
+
+  if (userSnap.exists()) {
+    const kullanıcıGirisi = userSnap.data();
+    const yazdir = document.querySelector(".kullanici");
+    const div = document.createElement("div");
+    div.className = "kullanici-body";
+    div.innerHTML = `
+        ${kullanıcıGirisi.isim} ${kullanıcıGirisi.soyisim}
+        `;
+    yazdir.appendChild(div);
+  }
 };
 
 const kullanıcıCıkıs = async (id) => {
-  const dataAl3 = await fetch(
-    `https://gorevhanekayit-default-rtdb.firebaseio.com/1/${id}.json`
-  );
-  const data = await dataAl3.json();
-  data.giris = false;
-  fetch(`https://gorevhanekayit-default-rtdb.firebaseio.com/1/${id}.json`, {
-    method: "PUT",
-    headers: { "Content-type": "application/json" },
-    body: JSON.stringify(data),
+  if (!id) return;
+
+  const userRef = doc(db, "users", id);
+  await updateDoc(userRef, {
+    giris: false,
   });
+
+  console.log("Kullanıcı çıkışı yapıldı");
 };
 
 const cıkısYap = async (id) => {
-  window.addEventListener("beforeunload", async (id) => {
+  window.addEventListener("beforeunload", async (event) => {
     await kullanıcıCıkıs(id);
-    alert("kullanıcı cıkışı yapıldı");
-    // No need to redirect as the page is unloading
+    // Bu mesaj kullanıcının dikkatini çekmek için tarayıcıya bağlı olarak çalışabilir veya çalışmayabilir.
+    event.returnValue = "Sayfadan ayrılmak istediğinize emin misiniz?";
   });
+
   const cikis = document.querySelector(".cikis");
   cikis.addEventListener("click", async () => {
     await kullanıcıCıkıs(id);
-    alert("kullanıcı cıkışı yapıldı");
+    alert("Kullanıcı çıkışı yapıldı");
     window.location.href = "../giris-yap.html";
   });
 };
 
 (async () => {
   const id = await dataAl();
-  kullanıcıGöster(id);
-  cıkısYap(id);
+  await kullanıcıGöster(id);
+  await cıkısYap(id);
 })();
